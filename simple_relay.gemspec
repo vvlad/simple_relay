@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = SimpleRelay::VERSION
   spec.authors       = ["Vlad Verestiuc"]
   spec.email         = ["verestiuc.vlad@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Write a gem description}
+  spec.summary       = %q{Write a gem summary}
   spec.homepage      = ""
   spec.license       = "MIT"
 
