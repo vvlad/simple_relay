@@ -1,29 +1,23 @@
+
 # SimpleRelay
 
-TODO: Write a gem description
+  Uses different SMTP accounts based on the sender of the message
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'simple_relay'
+    gem install simple_relay
 
 And then execute:
 
-    $ bundle
+```shell
+    $ simple_relay configure
+    $ vim ~/.simple_relay.yml
+    $ simple_relay install
+    $ launchctl load ~/Library/LaunchAgents/com.github.vvlad.simple_relay.plist
+    $ lsof -p :1025
+```
 
-Or install it yourself as:
+Configure your email client to use the relay server
 
-    $ gem install simple_relay
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
