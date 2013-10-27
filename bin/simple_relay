@@ -27,7 +27,7 @@ when "configure" then FileUtils.cp(File.expand_path("../../example.yml", __FILE_
 when "start" then start_server
 when "install" then
   if $OS =~ /Darwin/
-    plist <<-XML
+    plist = <<-XML
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -56,7 +56,7 @@ when "install" then
 </plist>
     XML
     open("#{ENV["HOME"]}/Library/LaunchAgents/com.github.vvlad.simple_relay.plist","w") do |f|
-      f << xml
+      f << plist
     end
   else
     puts "#{$OS} not supported"
