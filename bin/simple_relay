@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+
+$: << File.expand_path("../../lib", __FILE__)
+require 'simple_relay'
+require 'yaml'
+require 'fileutils'
+
+
+
+
+def start_server
+  config = YAML.load_file("#{ENV["HOME"]}/.simple_relay.yml")
+  EM.run do
+    EM.start_server config.fetch("listen","127.0.0.1"), config.fetch("port",1025), SimpleRelay::Server do |server|
+
+      server.accounts = config.fetch("accounts",{})
+
+    end
+  end
+
+end
+
+$OS = `uname -s 2>/dev/null`.strip
+
+case ARGV.first
+when "configure" then FileUtils.cp(File.expand_path("../../example.yml", __FILE__) , "#{ENV["HOME"]}/.simple_relay.yml")
+when "start" then start_server
+when "install" then
+  if $OS =~ /Darwin/
+    plist <<-XML
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>KeepAlive</key>
+    <dict>
+      <key>SuccessfulExit</key>
+      <false/>
+    </dict>
+    <key>Label</key>
+    <string>com.github.vvlad.simple_relay</string>
+    <key>ProgramArguments</key>
+    <array>
+      <string>#{RbConfig.ruby}</string>
+      <string>#{__FILE__}</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>WorkingDirectory</key>
+    <string>#{File.expand_path("../..", __FILE__)}</string>
+    <key>StandardErrorPath</key>
+    <string>#{ENV["HOME"]}/Library/Logs/simple_relay.log</string>
+    <key>StandardOutPath</key>
+    <string>#{ENV["HOME"]}/Library/Logs/simple_relay.log</string>
+  </dict>
+</plist>
+    XML
+    open("#{ENV["HOME"]}/Library/LaunchAgents/com.github.vvlad.simple_relay.plist","w") do |f|
+      f << xml
+    end
+  else
+    puts "#{$OS} not supported"
+  end
+else start_server
+end

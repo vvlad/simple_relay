@@ -9,7 +9,6 @@ module SimpleRelay
 
     def invoke_mail_from
       super
-      puts "begin proxy"
       proxy_incoming_to(@args[:connection])
       @args[:connection].proxy_incoming_to(self)
     end

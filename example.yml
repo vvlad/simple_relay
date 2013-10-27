@@ -1,0 +1,16 @@
+
+listen: 127.0.0.1
+port: 1025
+
+accounts:
+  # "vlad.verestiuc@me.com":
+  #   starttls: true
+  #   host: smtp.mail.me.com
+  #   port: 587
+  #   auth:
+  #     type: :plain
+  #     username: vlad.verestiuc@me.com
+  #     password: *****
+  #   domain: me.com
+  #   verbose: true
+
